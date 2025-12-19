@@ -134,11 +134,11 @@ export default function Contact() {
           <p>
             <strong>GitHub:</strong>{" "}
             <a
-              href="https://github.com/HuyyyDo/react-portfolio-app02"
+              href="https://github.com/HuyyyDo"
               target="_blank"
               rel="noreferrer"
             >
-              https://github.com/HuyyyDo/react-portfolio-app02
+              https://github.com/HuyyyDo
             </a>
           </p>
         </div>
