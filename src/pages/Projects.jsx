@@ -55,6 +55,7 @@
 
 // src/pages/Projects.jsx
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 // Optional: keep these as a fallback if the API is empty/unavailable
 const FALLBACK = [
@@ -80,9 +81,15 @@ export default function Projects() {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading]   = useState(true);
   const [error, setError]       = useState("");
+  const [token, setToken]       = useState(null);
 
   // Use env var when deployed, fallback to localhost in dev
   const API = import.meta.env.VITE_API_URL ?? "http://localhost:4000";
+
+  useEffect(() => {
+    const savedToken = localStorage.getItem('token');
+    setToken(savedToken);
+  }, []);
 
   useEffect(() => {
     let alive = true;
@@ -95,6 +102,7 @@ export default function Projects() {
 
         // Map backend fields to your UI fields (img/role/link may not exist yet)
         const mapped = (Array.isArray(data) ? data : []).map(p => ({
+          _id: p._id,
           title: p.title,
           description: p.description,
           // Optional fields if you add them to the DB later:
@@ -122,30 +130,56 @@ export default function Projects() {
     };
   }, [API]);
 
+  const handleDelete = async (projectId) => {
+    if (!window.confirm('Are you sure you want to delete this project?')) return;
+    
+    if (!token) {
+      alert('You must be signed in to delete a project');
+      return;
+    }
+
+    try {
+      const res = await fetch(`${API}/api/projects/${projectId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      if (!res.ok) throw new Error(`Delete failed (${res.status})`);
+      
+      setProjects(projects.filter(p => p._id !== projectId));
+      alert('Project deleted successfully!');
+    } catch (err) {
+      console.error('Delete error:', err);
+      alert('Failed to delete project: ' + err.message);
+    }
+  };
+
   if (loading) return <p>Loading projects…</p>;
-  if (error)   return (
-    <section>
-      <p className="kicker">Projects</p>
-      <h2>Highlighted Work</h2>
-      <p className="small" style={{ color: "#f59e0b" }}>{error} Showing local examples.</p>
-      <ProjectGrid projects={projects} />
-    </section>
-  );
 
   return (
     <section>
       <p className="kicker">Projects</p>
       <h2>Highlighted Work</h2>
-      <ProjectGrid projects={projects} />
+      {token && (
+        <Link to="/admin/add-project" style={{ marginTop: '1rem', display: 'inline-block' }} className="btn">
+          + Add Project
+        </Link>
+      )}
+      {error && (
+        <p className="small" style={{ marginTop: "1rem", color: "#f59e0b" }}>{error} Showing local examples.</p>
+      )}
+      <ProjectGrid projects={projects} onDelete={handleDelete} isAdmin={!!token} />
     </section>
   );
 }
 
-function ProjectGrid({ projects }) {
+function ProjectGrid({ projects, onDelete, isAdmin }) {
   return (
     <div className="grid" style={{ marginTop: "1rem" }}>
       {projects.map((p) => (
-        <article className="card" key={p.title}>
+        <article className="card" key={p._id || p.title}>
           <img
             src={p.img}
             alt={p.title}
@@ -159,8 +193,8 @@ function ProjectGrid({ projects }) {
               Completed: {new Date(p.completion).toLocaleDateString()}
             </p>
           )}
-          {p.link && (
-            <div style={{ display: "flex", gap: ".5rem" }}>
+          <div style={{ display: "flex", gap: ".5rem", flexWrap: 'wrap' }}>
+            {p.link && (
               <a
                 className="btn"
                 href={p.link}
@@ -171,8 +205,24 @@ function ProjectGrid({ projects }) {
               >
                 Open
               </a>
-            </div>
-          )}
+            )}
+            {isAdmin && p._id && (
+              <button
+                onClick={() => onDelete(p._id)}
+                style={{
+                  padding: '0.5rem 1rem',
+                  backgroundColor: '#dc2626',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '0.5rem',
+                  cursor: 'pointer',
+                  fontSize: '0.875rem'
+                }}
+              >
+                Delete
+              </button>
+            )}
+          </div>
         </article>
       ))}
     </div>
