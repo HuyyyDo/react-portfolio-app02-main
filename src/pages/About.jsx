@@ -1,4 +1,6 @@
 // src/pages/About.jsx
+import { FaDownload } from 'react-icons/fa'
+
 export default function About(){ 
   return (
     <section>
