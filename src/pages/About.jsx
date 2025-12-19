@@ -22,7 +22,7 @@ export default function About(){
 
         <div className="card" style={{display:'flex', alignItems:'center', gap:'1rem'}}>
           <img
-            src="/assets/hvi.jpg"
+            src="/assets/hvi.JPG"
             alt="Portrait of Trong Do Huy Hoang"
             width="160"
             height="160"
