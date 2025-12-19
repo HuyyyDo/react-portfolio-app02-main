@@ -122,12 +122,25 @@ export default function Services() {
 
   return (
     <section>
-      <p className="kicker">Services</p>
-      <h2>What I can help with</h2>
+      <div style={{
+        background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(30, 41, 59, 0.6) 100%)',
+        borderRadius: '1.5rem',
+        padding: '3rem 2rem',
+        marginBottom: '2rem',
+        border: '1px solid rgba(100, 200, 255, 0.2)',
+        backdropFilter: 'blur(10px)',
+      }}>
+        <p className="kicker" style={{ fontSize: '0.875rem', letterSpacing: '0.15em' }}>SERVICES</p>
+        <h2 style={{
+          background: 'linear-gradient(135deg, #64c8ff 0%, #a78bfa 100%)',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+          backgroundClip: 'text',
+        }}>What I can help with</h2>
+      </div>
 
-      {/* Social icons (unchanged) */}
+      {/* Social icons */}
       <div
-        className="card"
         style={{
           display: "flex",
           gap: "1.25rem",
@@ -135,6 +148,9 @@ export default function Services() {
           alignItems: "center",
           padding: "2rem",
           marginTop: ".75rem",
+          background: 'linear-gradient(135deg, rgba(100, 200, 255, 0.05) 0%, rgba(167, 139, 250, 0.05) 100%)',
+          borderRadius: '1.5rem',
+          border: '1px solid rgba(100, 200, 255, 0.2)',
         }}
       >
         {socials.map(({ label, href, Icon }) => (
@@ -154,6 +170,16 @@ export default function Services() {
               justifyContent: "center",
               alignItems: "center",
               color: "var(--accent-2)",
+              transition: 'all 0.3s ease',
+              cursor: 'pointer',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.boxShadow = '0 0 30px rgba(100, 200, 255, 0.5)'
+              e.currentTarget.style.transform = 'scale(1.1)'
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.boxShadow = 'none'
+              e.currentTarget.style.transform = 'scale(1)'
             }}
           >
             <Icon size={56} />
@@ -162,18 +188,31 @@ export default function Services() {
       </div>
 
       {loading ? (
-        <p style={{ marginTop: "1rem" }}>Loading services…</p>
+        <p style={{ marginTop: "1rem", textAlign: 'center' }}>Loading services…</p>
       ) : (
         <>
           {error && (
-            <p className="small" style={{ marginTop: "1rem", color: "#f59e0b" }}>
+            <p className="small" style={{ marginTop: "1rem", color: "#f59e0b", textAlign: 'center' }}>
               {error} Showing local examples.
             </p>
           )}
-          <div className="grid" style={{ marginTop: "1rem" }}>
+          <div className="grid" style={{ marginTop: "2rem" }}>
             {services.map((s) => (
-              <article className="card" key={s.title}>
-                <h3>{s.title}</h3>
+              <article className="card" key={s.title} style={{
+                background: 'linear-gradient(135deg, rgba(100, 200, 255, 0.05) 0%, rgba(167, 139, 250, 0.05) 100%)',
+                border: '1px solid rgba(100, 200, 255, 0.2)',
+                backdropFilter: 'blur(10px)',
+                transition: 'all 0.3s ease',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = 'var(--accent)'
+                e.currentTarget.style.background = 'linear-gradient(135deg, rgba(100, 200, 255, 0.15) 0%, rgba(167, 139, 250, 0.1) 100%)'
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = 'rgba(100, 200, 255, 0.2)'
+                e.currentTarget.style.background = 'linear-gradient(135deg, rgba(100, 200, 255, 0.05) 0%, rgba(167, 139, 250, 0.05) 100%)'
+              }}>
+                <h3 style={{color: 'var(--accent-2)'}}>{s.title}</h3>
                 <p>{s.desc}</p>
               </article>
             ))}

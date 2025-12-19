@@ -70,6 +70,7 @@
 // src/pages/Contact.jsx
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { FaEnvelope, FaGithub, FaPaperPlane } from "react-icons/fa";
 
 export default function Contact() {
   const [form, setForm] = useState({
@@ -125,50 +126,112 @@ export default function Contact() {
 
   return (
     <section>
-      <p className="kicker">Contact</p>
-      <h2>Let&apos;s work together</h2>
+      <div style={{
+        background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(30, 41, 59, 0.6) 100%)',
+        borderRadius: '1.5rem',
+        padding: '3rem 2rem',
+        marginBottom: '2rem',
+        border: '1px solid rgba(100, 200, 255, 0.2)',
+        backdropFilter: 'blur(10px)',
+      }}>
+        <p className="kicker" style={{ fontSize: '0.875rem', letterSpacing: '0.15em' }}>CONTACT</p>
+        <h2 style={{
+          background: 'linear-gradient(135deg, #64c8ff 0%, #a78bfa 100%)',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+          backgroundClip: 'text',
+        }}>Let&apos;s work together</h2>
+      </div>
 
-      <div className="grid" style={{ marginTop: "1rem" }}>
-        <div className="card">
-          <p><strong>Email:</strong> huyhoang.ais@gmail.com</p>
-          <p>
-            <strong>GitHub:</strong>{" "}
+      <div className="grid" style={{ marginTop: "2rem" }}>
+        <div className="card" style={{
+          background: 'linear-gradient(135deg, rgba(100, 200, 255, 0.05) 0%, rgba(167, 139, 250, 0.05) 100%)',
+          border: '1px solid rgba(100, 200, 255, 0.3)',
+          backdropFilter: 'blur(10px)',
+        }}>
+          <div style={{marginBottom: '1.5rem'}}>
+            <div style={{display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.75rem'}}>
+              <FaEnvelope size={20} style={{color: 'var(--accent)'}} />
+              <strong>Email:</strong>
+            </div>
+            <a href="mailto:huyhoang.ais@gmail.com" style={{
+              color: 'var(--accent)',
+              textDecoration: 'none',
+              transition: 'opacity 0.3s',
+            }}>
+              huyhoang.ais@gmail.com
+            </a>
+          </div>
+          <div>
+            <div style={{display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.75rem'}}>
+              <FaGithub size={20} style={{color: 'var(--accent)'}} />
+              <strong>GitHub:</strong>
+            </div>
             <a
               href="https://github.com/HuyyyDo"
               target="_blank"
               rel="noreferrer"
+              style={{
+                color: 'var(--accent)',
+                textDecoration: 'none',
+                transition: 'opacity 0.3s',
+              }}
             >
-              https://github.com/HuyyyDo
+              github.com/HuyyyDo
             </a>
-          </p>
+          </div>
         </div>
 
-        <form className="card" onSubmit={submit} aria-label="Contact form" noValidate>
+        <form className="card" onSubmit={submit} aria-label="Contact form" noValidate style={{
+          background: 'linear-gradient(135deg, rgba(100, 200, 255, 0.05) 0%, rgba(167, 139, 250, 0.05) 100%)',
+          border: '1px solid rgba(100, 200, 255, 0.3)',
+          backdropFilter: 'blur(10px)',
+        }}>
           <div className="row">
             <div>
               <label htmlFor="firstName">First Name</label>
-              <input id="firstName" name="firstName" value={form.firstName} onChange={update} required />
+              <input id="firstName" name="firstName" value={form.firstName} onChange={update} required style={{
+                background: 'rgba(30, 41, 59, 0.5)',
+                border: '1px solid rgba(100, 200, 255, 0.2)',
+                color: 'inherit',
+              }} />
             </div>
             <div>
               <label htmlFor="lastName">Last Name</label>
-              <input id="lastName" name="lastName" value={form.lastName} onChange={update} required />
+              <input id="lastName" name="lastName" value={form.lastName} onChange={update} required style={{
+                background: 'rgba(30, 41, 59, 0.5)',
+                border: '1px solid rgba(100, 200, 255, 0.2)',
+                color: 'inherit',
+              }} />
             </div>
           </div>
 
           <div className="row">
             <div>
               <label htmlFor="phone">Contact Number</label>
-              <input id="phone" name="phone" value={form.phone} onChange={update} />
+              <input id="phone" name="phone" value={form.phone} onChange={update} style={{
+                background: 'rgba(30, 41, 59, 0.5)',
+                border: '1px solid rgba(100, 200, 255, 0.2)',
+                color: 'inherit',
+              }} />
             </div>
             <div>
               <label htmlFor="email">Email</label>
-              <input id="email" type="email" name="email" value={form.email} onChange={update} required />
+              <input id="email" type="email" name="email" value={form.email} onChange={update} required style={{
+                background: 'rgba(30, 41, 59, 0.5)',
+                border: '1px solid rgba(100, 200, 255, 0.2)',
+                color: 'inherit',
+              }} />
             </div>
           </div>
 
           <div>
             <label htmlFor="message">Message</label>
-            <textarea id="message" name="message" value={form.message} onChange={update} required />
+            <textarea id="message" name="message" value={form.message} onChange={update} required style={{
+              background: 'rgba(30, 41, 59, 0.5)',
+              border: '1px solid rgba(100, 200, 255, 0.2)',
+              color: 'inherit',
+            }} />
           </div>
 
           {error && (
@@ -178,8 +241,14 @@ export default function Contact() {
           )}
 
           <div className="actions">
-            <button className="btn" type="submit" disabled={submitting}>
-              {submitting ? "Sending..." : "Send"}
+            <button className="btn" type="submit" disabled={submitting} style={{
+              background: 'linear-gradient(135deg, var(--accent) 0%, #64c8ff 100%)',
+              border: 'none',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+            }}>
+              <FaPaperPlane size={16} /> {submitting ? "Sending..." : "Send Message"}
             </button>
           </div>
         </form>
