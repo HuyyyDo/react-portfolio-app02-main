@@ -163,7 +163,7 @@ export default function Projects() {
       <p className="kicker">Projects</p>
       <h2>Highlighted Work</h2>
       {token && (
-        <Link to="/admin/add-project" style={{ marginTop: '1rem', display: 'inline-block' }} className="btn">
+        <Link to="/projects/new" style={{ marginTop: '1rem', display: 'inline-block' }} className="btn">
           + Add Project
         </Link>
       )}
